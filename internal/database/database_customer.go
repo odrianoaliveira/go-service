@@ -5,7 +5,7 @@ import (
 	"github.com/odrianoaliveira/go-service/models"
 )
 
-func (c Client) GetAllCustomers(ctx context.Context, emailAddress string) ([]models.Customer, error) {
+func (c *Client) GetAllCustomers(ctx context.Context, emailAddress string) ([]models.Customer, error) {
 	var customers []models.Customer
 
 	result := c.DB.WithContext(ctx).
