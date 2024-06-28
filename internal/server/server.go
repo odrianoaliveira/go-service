@@ -14,6 +14,7 @@ type (
 		Start() error
 		Readiness(ctx echo.Context) error
 		Liveness(ctx echo.Context) error
+		GetAllCustomers(ctx echo.Context) error
 	}
 )
 
@@ -57,4 +58,6 @@ func (s *EchoServer) Readiness(ctx echo.Context) error {
 func (s *EchoServer) registerRoutes() {
 	s.echo.GET("/liveness", s.Liveness)
 	s.echo.GET("/readiness", s.Readiness)
+	cg := s.echo.Group("/customers")
+	cg.GET("", s.GetAllCustomers)
 }
