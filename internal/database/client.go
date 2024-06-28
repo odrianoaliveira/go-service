@@ -8,13 +8,17 @@ import (
 	"time"
 )
 
+type DatabaseClient interface {
+	Ready() bool
+}
+
 type Client struct {
 	DB *gorm.DB
 }
 
-func NewClient() (*Client, error) {
+func NewClient() (DatabaseClient, error) {
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=UTC",
-		"localhost", "postgres", "password", "postgres", "5432")
+		"localhost", "postgres", "postgres", "postgres", "5432")
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			TablePrefix: "wisdom.",
